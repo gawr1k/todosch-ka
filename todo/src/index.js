@@ -9,12 +9,19 @@ import "./style/index.css"
 
 
 const App = () => {
+
+    const todoData = [
+        { label: 'Completed task', important: false },
+        { label: 'Editing task', important: true },
+        { label: 'Active task', important: false }
+    ];
+
     return (
-        <div>
+        <section className="todoapp">
             <AppHeader/>
-            <TaskList/>
+            <TaskList todos={todoData} />
             <Footer/>
-        </div>
+        </section >
     );
 };
 

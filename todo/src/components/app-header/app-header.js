@@ -3,10 +3,10 @@ import NewTaskForm from "../new-task-form";
 
 const AppHeader = () => {
     return (
-        <section className="todoapp">
-            <h1>todos</h1>
-            <NewTaskForm/>
-        </section>
+            <header className="header">
+                <h1>todos</h1>
+                <NewTaskForm/>
+            </header>
     );
 };
 
