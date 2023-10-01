@@ -1,19 +1,27 @@
+
+
 import React from "react";
 
-const Task = ({ label, important = false }) => {
 
+
+
+const Task = ({text}) => {
     return (
+        <li>
             <div className="view">
-                <input className="toggle" type="checkbox"/>
-                    <label>
-                        <span className="description">{ label }</span>
-                        <span className="created">created 17 seconds ago</span>
-                    </label>
-                    <button className="icon icon-edit"></button>
-                    <button className="icon icon-destroy"></button>
+              <input className="toggle" type="checkbox"/>
+              <label>
+                <span className="description">{text}</span>
+              </label>
+              <button className="icon icon-edit"></button>
+              <button className="icon icon-destroy"></button>
             </div>
-    );//<span> { label }</span>;
+          </li>
+    );
 
 };
+
+
+
 
 export default Task;

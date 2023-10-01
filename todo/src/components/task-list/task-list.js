@@ -1,22 +1,14 @@
+import Task from "../task/task";
 import React from "react";
 
-import Task from "../task/task";
-
-const TaskList = ( {todos} ) => {
-
-    const elements = todos.map((item) => {
-        return (
-            <li className="completed">
-                <Task {...item } />
-            </li>
-        );
-    });
-
+function TaskList ({tasks}) {
     return (
         <ul className="todo-list">
-            { elements }
+            {tasks.map(task => (
+                <Task key={task.id} text={task.text} />  
+            ))}
         </ul>
-    );
-};
+    )
+}
 
 export default TaskList;
