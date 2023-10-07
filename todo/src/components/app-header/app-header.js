@@ -1,5 +1,4 @@
 import React from "react";
-import NewTaskForm from "../new-task-form";
 
 const AppHeader = () => {
     return (

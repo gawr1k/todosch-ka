@@ -1,14 +1,37 @@
-import Task from "../task/task";
+import { Task } from '../task/task'
 import React from "react";
+import PropTypes from 'prop-types';
 
-function TaskList ({tasks}) {
-    return (
-        <ul className="todo-list">
-            {tasks.map(task => (
-                <Task key={task.id} text={task.text} />  
-            ))}
-        </ul>
-    )
-}
 
-export default TaskList;
+export const TaskList = ({ todo, onCheked, onDeleted, startTimer, pauseTimer }) => {
+    const elements = todo.map((elem) => {
+      const { label, time, isActive, id, minutes, seconds } = elem;
+      return (
+        <Task
+          label={label}
+          time={time}
+          styleName={isActive ? null : 'completed'}
+          key={id}
+          minutes={minutes}
+          seconds={seconds}
+          onCheked={() => onCheked(id)}
+          onDeleted={() => onDeleted(id)}
+          startTimer={() => startTimer(id)}
+          pauseTimer={() => pauseTimer()}
+        />
+      );
+    });
+    return <ul className="todo-list">{elements}</ul>;
+  };
+  
+  TaskList.defaultProps = {
+    todo: [],
+    onCheked: () => {},
+    onDeleted: () => {},
+  };
+  
+  TaskList.propTypes = {
+    todo: PropTypes.array,
+    onCheked: PropTypes.func,
+    onDeleted: PropTypes.func,
+  };
