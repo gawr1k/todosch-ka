@@ -7,7 +7,7 @@ import { Footer } from '../footer/footer'
 export const App = () => {
     const [todoData, setTodoData] = useState([]);
     const [stateFilter, setStateFilter] = useState('All');
-    const [isTimerOn, setIsTimerOn] = useState(false);
+    const [isTimerOn, setIsTimerOn] = useState(true);
   
     const ref = useRef();
   

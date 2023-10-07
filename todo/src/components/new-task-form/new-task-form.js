@@ -49,25 +49,7 @@ export class NewTaskForm extends Component {
               onInput={this.onInputChange}
               value={this.state.label}
             ></input>
-            <input
-              className="new-todo-form__timer"
-              placeholder="Min"
-              type="number"
-              min={0}
-              onChange={this.onChangeMinute}
-              value={this.state.minutes}
-              required
-            ></input>
-            <input
-              className="new-todo-form__timer"
-              type="number"
-              placeholder="Sec"
-              onChange={this.onChangeSecond}
-              value={this.state.seconds}
-              min={1}
-              max={59}
-              required
-            ></input>
+            
             <button type="submit" />
           </form>
         </header>
