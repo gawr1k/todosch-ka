@@ -1,13 +1,17 @@
-/* eslint-disable quotes */
-import React, { Component } from "react";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import PropTypes from 'prop-types';
 
-export class Task extends Component {
-  state = {
-    edit: false,
-    label: this.props.label,
-  };
+export default class Task extends Component {
+  constructor(props) {
+    const { label } = props;
+    super(props);
+
+    this.state = {
+      edit: false,
+      label,
+    };
+  }
 
   onTaskEdit = () => {
     this.setState({
@@ -29,22 +33,45 @@ export class Task extends Component {
   };
 
   render() {
-    const { time, styleName, onCheked, onDeleted } = this.props;
+    const {
+      minutes,
+      seconds,
+      time,
+      styleName,
+      onCheked,
+      onDeleted,
+      startTimer,
+      pauseTimer,
+    } = this.props;
+    const { edit, label } = this.state;
     return (
-      <li className={!this.state.edit ? styleName : "editing"}>
+      <li className={!edit ? styleName : 'editing'}>
         <div className="view">
           <input
-            checked={styleName === "completed"}
+            checked={styleName === 'completed'}
             className="toggle"
             type="checkbox"
             onChange={onCheked}
-          ></input>
-          <label>
-            <span className="title">{this.state.label}</span>
+          />
+          <div className="label">
+            <span className="title">{label}</span>
             <span className="description">
-              <button className="icon icon-play"></button>
-              <button className="icon icon-pause"></button>
-              12:25
+              <button
+                className="icon icon-play"
+                type="button"
+                aria-label="Start timer"
+                onClick={startTimer}
+              />
+
+              <button
+                className="icon icon-pause"
+                type="button"
+                aria-label="Pause timer"
+                onClick={pauseTimer}
+              />
+              {minutes < 10 ? `0${minutes}` : minutes}
+              :
+              {seconds < 10 ? `0${seconds}` : seconds}
             </span>
             <span className="created">
               {`created ${formatDistanceToNow(time, {
@@ -52,18 +79,28 @@ export class Task extends Component {
                 addSuffix: true,
               })}`}
             </span>
-          </label>
-          <button className="icon icon-edit" onClick={this.onTaskEdit}></button>
-          <button className="icon icon-destroy" onClick={onDeleted}></button>
+          </div>
+          <button
+            type="button"
+            className="icon icon-edit"
+            onClick={this.onTaskEdit}
+            aria-label="Edit task"
+          />
+          <button
+            type="button"
+            className="icon icon-destroy"
+            onClick={onDeleted}
+            aria-label="Delete task"
+          />
         </div>
-        {this.state.edit ? (
+        {edit ? (
           <form onSubmit={this.submitTask}>
             <input
               type="text"
               className="edit"
-              value={this.state.label}
+              value={label}
               onInput={this.changeTask}
-            ></input>
+            />
           </form>
         ) : null}
       </li>
@@ -72,12 +109,11 @@ export class Task extends Component {
 }
 
 Task.defaultProps = {
-  label: "New task",
+  label: 'New task',
   time: new Date(),
   styleName: null,
   onCheked: () => {},
   onDeleted: () => {},
-  onEdit: () => {},
 };
 
 Task.propTypes = {
@@ -86,5 +122,8 @@ Task.propTypes = {
   styleName: PropTypes.string,
   onCheked: PropTypes.func,
   onDeleted: PropTypes.func,
-  onEdit: PropTypes.func,
+  minutes: PropTypes.number.isRequired,
+  seconds: PropTypes.number.isRequired,
+  startTimer: PropTypes.func.isRequired,
+  pauseTimer: PropTypes.func.isRequired,
 };

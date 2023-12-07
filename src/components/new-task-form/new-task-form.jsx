@@ -1,13 +1,16 @@
-/* eslint-disable quotes */
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-export class NewTaskForm extends Component {
-  state = {
-    label: "",
-    minutes: "",
-    seconds: "",
-  };
+export default class NewTaskForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      label: '',
+      minutes: '',
+      seconds: '',
+    };
+  }
 
   onInputChange = (event) => {
     this.setState({
@@ -17,15 +20,15 @@ export class NewTaskForm extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    this.props.onAdded(
-      this.state.label,
-      this.state.minutes,
-      this.state.seconds
-    );
+
+    const { label, minutes, seconds } = this.state;
+    const { onAdded } = this.props;
+
+    onAdded(label, minutes, seconds);
     this.setState({
-      label: "",
-      minutes: "",
-      seconds: "",
+      label: '',
+      minutes: '',
+      seconds: '',
     });
   };
 
@@ -42,6 +45,7 @@ export class NewTaskForm extends Component {
   };
 
   render() {
+    const { label, minutes, seconds } = this.state;
     return (
       <header>
         <h1>todos</h1>
@@ -49,15 +53,34 @@ export class NewTaskForm extends Component {
           <input
             className="new-todo"
             placeholder="What needs to be done?"
-            autoFocus
             required
             onInput={this.onInputChange}
-            value={this.state.label}
-          ></input>
-          <input className="new-todo-form__timer" placeholder="Min" autoFocus />
-          <input className="new-todo-form__timer" placeholder="Sec" autoFocus />
+            value={label}
+          />
+          <input
+            className="new-todo-form__timer"
+            placeholder="Min"
+            type="number"
+            min={0}
+            onChange={this.onChangeMinute}
+            value={minutes}
+            required
+          />
+          <input
+            className="new-todo-form__timer"
+            type="number"
+            placeholder="Sec"
+            onChange={this.onChangeSecond}
+            value={seconds}
+            min={1}
+            max={59}
+            required
+          />
 
-          <button type="submit" />
+          <button
+            type="submit"
+            aria-label="Add new todo"
+          />
         </form>
       </header>
     );
