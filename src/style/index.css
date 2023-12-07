@@ -251,7 +251,7 @@ body {
   color: gray;
 }
 
-.todo-list li.completed label .description {
+.todo-list li.completed .label .title {
   color: #cdcdcd;
   text-decoration: line-through;
 }

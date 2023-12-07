@@ -38,11 +38,13 @@ TaskList.defaultProps = {
 };
 
 TaskList.propTypes = {
-  todo: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    text: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
-  })),
+  todo: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      completed: PropTypes.bool.isRequired,
+    }),
+  ),
   startTimer: PropTypes.func.isRequired,
   pauseTimer: PropTypes.func.isRequired,
   onCheked: PropTypes.func,

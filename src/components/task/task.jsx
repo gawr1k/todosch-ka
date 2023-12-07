@@ -118,12 +118,12 @@ Task.defaultProps = {
 
 Task.propTypes = {
   label: PropTypes.string,
-  time: PropTypes.string,
+  time: PropTypes.instanceOf(Date),
   styleName: PropTypes.string,
   onCheked: PropTypes.func,
   onDeleted: PropTypes.func,
   minutes: PropTypes.number.isRequired,
-  seconds: PropTypes.number.isRequired,
+  seconds: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   startTimer: PropTypes.func.isRequired,
   pauseTimer: PropTypes.func.isRequired,
 };
