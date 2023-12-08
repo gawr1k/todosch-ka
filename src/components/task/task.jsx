@@ -13,7 +13,7 @@ export default function Task({
   pauseTimer,
   label,
 }) {
-  const [edit, setEdit] = React.EuseState(false);
+  const [edit, setEdit] = React.useState(false);
   const [currentLabel, setCurrentLabel] = React.useState(label);
 
   const onTaskEdit = () => {
