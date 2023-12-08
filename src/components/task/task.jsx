@@ -1,111 +1,95 @@
-import React, { Component } from 'react';
+import React from 'react';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import PropTypes from 'prop-types';
 
-export default class Task extends Component {
-  constructor(props) {
-    const { label } = props;
-    super(props);
+export default function Task({
+  minutes,
+  seconds,
+  time,
+  styleName,
+  onCheked,
+  onDeleted,
+  startTimer,
+  pauseTimer,
+  label,
+}) {
+  const [edit, setEdit] = React.EuseState(false);
+  const [currentLabel, setCurrentLabel] = React.useState(label);
 
-    this.state = {
-      edit: false,
-      label,
-    };
-  }
-
-  onTaskEdit = () => {
-    this.setState({
-      edit: true,
-    });
+  const onTaskEdit = () => {
+    setEdit(true);
   };
 
-  changeTask = (event) => {
-    this.setState({
-      label: event.target.value,
-    });
+  const changeTask = (event) => {
+    setCurrentLabel(event.target.value);
   };
 
-  submitTask = (event) => {
+  const submitTask = (event) => {
     event.preventDefault();
-    this.setState({
-      edit: false,
-    });
+    setEdit(false);
   };
 
-  render() {
-    const {
-      minutes,
-      seconds,
-      time,
-      styleName,
-      onCheked,
-      onDeleted,
-      startTimer,
-      pauseTimer,
-    } = this.props;
-    const { edit, label } = this.state;
-    return (
-      <li className={!edit ? styleName : 'editing'}>
-        <div className="view">
-          <input
-            checked={styleName === 'completed'}
-            className="toggle"
-            type="checkbox"
-            onChange={onCheked}
-          />
-          <div className="label">
-            <span className="title">{label}</span>
-            <span className="description">
-              <button
-                className="icon icon-play"
-                type="button"
-                aria-label="Start timer"
-                onClick={startTimer}
-              />
-
-              <button
-                className="icon icon-pause"
-                type="button"
-                aria-label="Pause timer"
-                onClick={pauseTimer}
-              />
-              {minutes < 10 ? `0${minutes}` : minutes}
-              :
-              {seconds < 10 ? `0${seconds}` : seconds}
-            </span>
-            <span className="created">
-              {`created ${formatDistanceToNow(time, {
-                includeSeconds: true,
-                addSuffix: true,
-              })}`}
-            </span>
-          </div>
-          <button
-            type="button"
-            className="icon icon-edit"
-            onClick={this.onTaskEdit}
-            aria-label="Edit task"
-          />
-          <button
-            type="button"
-            className="icon icon-destroy"
-            onClick={onDeleted}
-            aria-label="Delete task"
-          />
-        </div>
-        {edit ? (
-          <form onSubmit={this.submitTask}>
-            <input
-              type="text"
-              className="edit"
-              value={label}
-              onInput={this.changeTask}
+  return (
+    <li className={!edit ? styleName : 'editing'}>
+      <div className="view">
+        <input
+          checked={styleName === 'completed'}
+          className="toggle"
+          type="checkbox"
+          onChange={onCheked}
+        />
+        <div className="label">
+          <span className="title">{currentLabel}</span>
+          <span className="description">
+            <button
+              className="icon icon-play"
+              type="button"
+              aria-label="Start timer"
+              onClick={startTimer}
             />
-          </form>
-        ) : null}
-      </li>
-    );
-  }
+
+            <button
+              className="icon icon-pause"
+              type="button"
+              aria-label="Pause timer"
+              onClick={pauseTimer}
+            />
+            {minutes < 10 ? `0${minutes}` : minutes}
+            :
+            {seconds < 10 ? `0${seconds}` : seconds}
+          </span>
+          <span className="created">
+            {`created ${formatDistanceToNow(time, {
+              includeSeconds: true,
+              addSuffix: true,
+            })}`}
+          </span>
+        </div>
+        <button
+          type="button"
+          className="icon icon-edit"
+          onClick={onTaskEdit}
+          aria-label="Edit task"
+        />
+        <button
+          type="button"
+          className="icon icon-destroy"
+          onClick={onDeleted}
+          aria-label="Delete task"
+        />
+      </div>
+      {edit ? (
+        <form onSubmit={submitTask}>
+          <input
+            type="text"
+            className="edit"
+            value={currentLabel}
+            onInput={changeTask}
+          />
+        </form>
+      ) : null}
+    </li>
+  );
 }
 
 Task.defaultProps = {
